@@ -11,13 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.avafin.apptest.R
-import com.avafin.apptest.data.model.Data
 import com.avafin.apptest.data.model.FieldsModel
 import com.avafin.apptest.databinding.ActivityMainBinding
 import com.avafin.apptest.ui.viewmodel.FieldsViewModel
 import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
-import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONArray
 import org.json.JSONObject
@@ -41,18 +39,8 @@ class MainActivity : AppCompatActivity() {
         btnRegister = findViewById<Button>(R.id.btnRegister)
 
         fieldsViewModel.fieldsModel.observe(this, Observer {
-            //binding.tvQuote.text = it.toString()
-            //binding.tvQuote.text = it.data.amlCheck.toString()
-            //binding.tvAuthor.text = it.data.customerFirstname.toString()
-            //generateForm(it, findViewById<LinearLayout>(R.id.viewContainer))
 
-
-            // Genera el formulario dinámicamente utilizando DynamicFormGenerator
-            //val dynamicFormGenerator = DynamicFormGenerator(this)
-            // Parsea el JSON y obtén el mapa de datos del formulario
             generateForm(it)
-
-
         })
         fieldsViewModel.isLoading.observe(this, Observer {
             binding.loading.isVisible = it
@@ -61,15 +49,24 @@ class MainActivity : AppCompatActivity() {
         btnRegister!!.setOnClickListener {
             // Código a ejecutar cuando se haga clic en el botón
             // Aquí puedes realizar las acciones que deseas realizar al hacer clic en el botón
-            formValidation()
+            if (formValidation()){
+                Toast.makeText(applicationContext, "Hay errores de captura, por favor resuelve y vuelve a dar click en validar", Toast.LENGTH_LONG)
+                    .show()
+            }else{
+                Toast.makeText(applicationContext, "Todos los campos fueron validados correctamente", Toast.LENGTH_LONG)
+                    .show()
+            }
+
         }
     }
 
-    fun formValidation(){
+
+    fun formValidation(): Boolean{
         val count = linearLayoutForm!!.childCount
         val gson = Gson()
         val jsonData = gson.toJson(dataFields)
         val formData = parseJson(jsonData)
+        var errorExist: Boolean = false
         for (i in 0 until count) {
             //get the childs of the first layer
             val viewGroup = linearLayoutForm!!.getChildAt(i)
@@ -87,6 +84,7 @@ class MainActivity : AppCompatActivity() {
                     // Realiza las operaciones con el valor encontrado
                     val maxlen=valorBuscado?.get("maxlength") as Int
                     if (value.length > maxlen){
+                        errorExist=true
                         viewGroup.isErrorEnabled = true
                         viewGroup.error="El tamaño de texto excede el máximo de: " + valorBuscado?.get("maxlength").toString()
                     }else{
@@ -94,6 +92,7 @@ class MainActivity : AppCompatActivity() {
                         val matcher = pattern.matcher(value)
 
                         if (!matcher.matches()) {
+                            errorExist=true
                             viewGroup.isErrorEnabled = true
                             viewGroup.error="No cumple con regex: " + valorBuscado?.get("regex").toString()
                         }
@@ -103,7 +102,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-       print(count)
+       return errorExist
     }
     fun generateForm(json: FieldsModel) {
         val inflater = this.getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -111,7 +110,7 @@ class MainActivity : AppCompatActivity() {
         val jsonData = gson.toJson(json)
         val formData = parseJson(jsonData)
         dataFields = json
-
+        binding.loading.isVisible = true
         for ((key, value) in formData) {
             if (value["visible"] == true){
                 when (value["type"]) {
@@ -123,6 +122,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+        binding.loading.isVisible = false
 
     }
 
