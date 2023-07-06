@@ -14,7 +14,7 @@ import javax.inject.Inject
 class FieldsViewModel @Inject constructor(
     private val getFieldsUseCase: GetFieldsUseCase
 ) : ViewModel() {
-    val fieldsModel = MutableLiveData<ResponseBody>() //MutableLiveData<FieldsModel>()
+    val fieldsModel = MutableLiveData<FieldsModel>() //MutableLiveData<ResponseBody>()
     val isLoading = MutableLiveData<Boolean>()
 
     fun onCreate() {
@@ -22,10 +22,10 @@ class FieldsViewModel @Inject constructor(
             isLoading.postValue(true)
             val result = getFieldsUseCase()
 
-            //if(result.ok==1){
+            if(result.ok==1){
                 fieldsModel.postValue(result)
                 isLoading.postValue(false)
-            //}
+            }
         }
     }
 }

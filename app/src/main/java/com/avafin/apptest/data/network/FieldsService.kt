@@ -12,10 +12,10 @@ import javax.inject.Inject
 
 class FieldsService @Inject constructor(private val api:FieldsApiClient) {
 
-    suspend fun getFields(): ResponseBody {  //
+    suspend fun getFields(): FieldsModel {
         return withContext(Dispatchers.IO) {
             val response = api.getAllFields()
-            response//.body()!!
+            response.body()!!
         }
     }
 }

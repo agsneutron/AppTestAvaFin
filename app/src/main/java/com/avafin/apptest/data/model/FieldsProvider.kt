@@ -6,5 +6,5 @@ import javax.inject.Singleton
 
 @Singleton
 class FieldsProvider @Inject constructor() {
-    lateinit var fields: ResponseBody//FieldsModel
+    lateinit var fields: FieldsModel //ResponseBody
 }

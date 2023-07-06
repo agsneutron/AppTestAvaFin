@@ -13,5 +13,5 @@ import retrofit2.http.POST
 
 interface FieldsApiClient {
     @POST("getRegistrationFields")
-    suspend fun getAllFields(): ResponseBody //Response<FieldsModel>
+    suspend fun getAllFields(): Response<FieldsModel>  //ResponseBody
 }

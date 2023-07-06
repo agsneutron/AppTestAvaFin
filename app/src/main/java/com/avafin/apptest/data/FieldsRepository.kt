@@ -11,7 +11,7 @@ class FieldsRepository @Inject constructor(
     private val fieldsProvider: FieldsProvider
 ) {
 
-    suspend fun getAllFields(): ResponseBody {  //FieldsModel
+    suspend fun getAllFields(): FieldsModel {  // ResponseBody
         val response = api.getFields()
         fieldsProvider.fields = response
         return response
