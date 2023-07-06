@@ -9,6 +9,7 @@
     app:boxStrokeWidthFocused="0dp"
     app:endIconMode="clear_text"
     android:id="@+id/textField"
+    android:paddingBottom="20dp"
     >
 
     <com.google.android.material.textfield.TextInputEditText

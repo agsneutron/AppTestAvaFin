@@ -83,10 +83,19 @@
 
 
             </LinearLayout>
+
             <Button
                 android:id="@+id/btnRegister"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="50dp"
+                android:text="Validar"
+                android:textColor="@color/light"
+                android:background="@color/secundary"
+                >
 
             </Button>
 
