@@ -12,6 +12,9 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface FieldsApiClient {
+    /* generamos una función suspendida, ya que vamos a usar corrutinas
+    * la llamda será con el método POST y le decimos que a la url base de nuestro objeto retrofit, le agregue getRegistrationFields
+    * para completar la url del endpoint*/
     @POST("getRegistrationFields")
-    suspend fun getAllFields(): Response<FieldsModel>  //ResponseBody
+    suspend fun getAllFields(): Response<FieldsModel>  //eel response es el tipo FieldsModel que ya definimos en data/model
 }

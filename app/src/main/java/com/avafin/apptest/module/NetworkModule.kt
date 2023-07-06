@@ -1,7 +1,6 @@
 package com.avafin.apptest.module
 
 import com.avafin.apptest.core.AuthInterceptor
-import com.avafin.apptest.data.model.Data2
 import com.avafin.apptest.data.model.RequestData
 import com.avafin.apptest.data.network.FieldsApiClient
 import com.google.gson.Gson

@@ -12,12 +12,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FieldsViewModel @Inject constructor(
-    private val getFieldsUseCase: GetFieldsUseCase
+    private val getFieldsUseCase: GetFieldsUseCase // inyectamos nuestro caso de uso
 ) : ViewModel() {
     val fieldsModel = MutableLiveData<FieldsModel>() //MutableLiveData<ResponseBody>()
     val isLoading = MutableLiveData<Boolean>()
 
     fun onCreate() {
+        // hacemos llamada a nuestro caso de uso para que nos regrese todos los campos y los almacene en memoria
+        // hacemos la llamada a la corrutina con viewModelScope
         viewModelScope.launch {
             isLoading.postValue(true)
             val result = getFieldsUseCase()

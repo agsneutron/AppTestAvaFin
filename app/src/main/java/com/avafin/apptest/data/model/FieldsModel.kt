@@ -4,16 +4,15 @@ import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 import org.json.JSONObject
 
-/*data class FieldsModel(
-    val err: List<String>
-)*/
-
+// definimos el modelo de respuesta que nos regresará retrofit
 data class FieldsModel(
     val ok: Int,
     val data: Data
 )
 
 data class Data(
+    /* Serializamos los nombres de los campos que regresa el endpoint, ya que como variables no son válidos nombres como:
+      customer-lastname o customer-monthly-income, y así oodemos renombrarlos a una forma más convencional*/
     @SerializedName("customer-lastname") val customerLastname: Field,
     @SerializedName("customer-phone") val customerPhone: Field,
     @SerializedName("customer-monthly-income") val customerMonthlyIncome: Field,
@@ -29,6 +28,8 @@ data class Data(
 
 
     )
+
+    // generamos un data cláss para los campos tipo texto
     data class Field(
         val req: Boolean,
         val group: String,
@@ -52,6 +53,7 @@ data class Data(
         val regex: String? = null
     )
 
+    // generamos un data cláss para los campos tipo select, pero que los values tienen la estructura (llave,valor)
     data class LanguageField(
         val req: Boolean,
         val group: String,
@@ -75,6 +77,7 @@ data class Data(
         val values: Map<String, String>
     )
 
+// generamos un data cláss para los campos tipo select, pero que los values tienen la estructura (valor) sin llave
     data class SelectField(
         val req: Boolean,
         val group: String,
@@ -98,6 +101,7 @@ data class Data(
         val values: List<String>
     )
 
+    // generamos un data cláss para los campos tipo checkbox
     data class CheckboxField(
         val req: Boolean,
         val group: String,
@@ -122,12 +126,10 @@ data class Data(
     )
 
 
+// creamos un data class para el json con las credenciales de acceso al endpoint
 data class RequestData(
     val login: String,
     val password: String,
     val data: JsonObject
 )
 
-data class Data2(
-    val `new-registration`: Boolean
-)
