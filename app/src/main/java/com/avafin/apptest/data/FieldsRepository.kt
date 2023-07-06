@@ -9,7 +9,7 @@ import javax.inject.Inject
 // Generamos nuestro repositorio de datos
 // con dagger hilt hacemos inyección de dependencias agregando @Inject constructor
 class FieldsRepository @Inject constructor(
-    private val api: FieldsService,
+    private val api: FieldsService,   // inyectamos FieldsService y FieldsProvider
     private val fieldsProvider: FieldsProvider
 ) {
     // generamos una función suspendida ya que usaremos corrutinas

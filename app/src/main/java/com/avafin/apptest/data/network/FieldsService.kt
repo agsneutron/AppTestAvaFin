@@ -13,6 +13,8 @@ import javax.inject.Inject
 /* DE acuerdo con uno de los principios SOLID, vamos a generar un repositorio que sea el que decida de donde
 * obriene la información, es decir, retrofit, o firebase o cambiamos los endpoints, esta clasé es la única que tendriamos que modificar
 * y el resto del proyecto no se entera ni sufre cambios*/
+
+// con dagger hilt hacemos inyección de dependencias agregando @Inject constructor
 class FieldsService @Inject constructor(private val api:FieldsApiClient) {
 
     /*como usamos corrutinas, generamos una función suspendida para obtener todos los campos que nos manda el endpoint*/

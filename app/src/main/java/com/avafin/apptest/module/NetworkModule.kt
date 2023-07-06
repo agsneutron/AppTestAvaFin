@@ -22,15 +22,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.POST
 import javax.inject.Singleton
 
-@Module
+@Module  // le decimos a dagger hilt que esto es un módulo, ya que será el que proveerá dependencias
+// definimos el alcance con InstallIn, es decir cuando va a morir la instancia, en este caso será a nivel de aplicachón
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    @Singleton
-    @Provides
+    @Singleton // con Singleton, se usa el patron de diseño para mantener solo una instancia
+    @Provides // para proveer retrofit
     fun provideRetrofit(): Retrofit {
         val jsonParser = JsonParser()
-
+        // definimos las credenciales
         val login = "testaffiliateexternal"
         val password = "testaffiliateexternal"
         val isNewRegistration = true
@@ -43,8 +44,10 @@ object NetworkModule {
         dataObject.addProperty("new-registration", true)
 
         jsonObject.put("data", dataObject)
+        // jsonData tiene la estructura del json de las credenciales para poder consultar el endpoint
         val jsonData = jsonParser.parse(jsonObject.toString()).asJsonObject
 
+        // generamos el Http Client para pasarle el json de las credenciasles
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor { chain ->
                 val originalRequest = chain.request()
@@ -63,8 +66,8 @@ object NetworkModule {
             .build()
     }
 
-    @Singleton
-    @Provides
+    @Singleton // con Singleton, se usa el patron de diseño para mantener solo una instancia
+    @Provides // para proveer retrofit
     fun provideFieldsApiClient(retrofit: Retrofit): FieldsApiClient {
         return retrofit.create(FieldsApiClient::class.java)
     }

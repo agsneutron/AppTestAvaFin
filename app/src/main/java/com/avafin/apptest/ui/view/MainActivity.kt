@@ -21,6 +21,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.util.regex.Pattern
 
+// con la notación AndroidEntryPoint de dagger hilt preparamps a la clase
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 

@@ -10,11 +10,13 @@ import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import javax.inject.Inject
 
+// preparmos la clase con la notación HiltViewModel de dagger hilt
+// con @Inject preparamos la case para hacer inyección de dependencias
 @HiltViewModel
 class FieldsViewModel @Inject constructor(
     private val getFieldsUseCase: GetFieldsUseCase // inyectamos nuestro caso de uso
 ) : ViewModel() {
-    val fieldsModel = MutableLiveData<FieldsModel>() //MutableLiveData<ResponseBody>()
+    val fieldsModel = MutableLiveData<FieldsModel>()
     val isLoading = MutableLiveData<Boolean>()
 
     fun onCreate() {
